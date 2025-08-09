@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Case Management System</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div id="auth-container">
+            <h1>Legal Case Management System</h1>
+            <div class="auth-forms">
+                <div id="login-form" class="auth-form">
+                    <h2>Login</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select id="role" required>
+                                <option value="advocate">Advocate</option>
+                                <option value="client">Client</option>
+                            </select>
+                        </div>
+                        <button type="submit">Login</button>
+                    </form>
+                    <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+                </div>
+
+                <div id="register-form" class="auth-form hidden">
+                    <h2>Register</h2>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="reg-username">Username</label>
+                            <input type="text" id="reg-username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-password">Password</label>
+                            <input type="password" id="reg-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-email">Email</label>
+                            <input type="email" id="reg-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-fullname">Full Name</label>
+                            <input type="text" id="reg-fullname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-role">Role</label>
+                            <select id="reg-role" required>
+                                <option value="advocate">Advocate</option>
+                                <option value="client">Client</option>
+                            </select>
+                        </div>
+                        <button type="submit">Register</button>
+                    </form>
+                    <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashboard" class="hidden">
+            <header>
+                <h1>Welcome, <span id="user-name"></span></h1>
+                <button id="logout-btn">Logout</button>
+            </header>
+
+            <div id="advocate-dashboard" class="role-dashboard hidden">
+                <nav class="dashboard-nav">
+                    <button class="nav-btn active" data-section="cases">Case Management</button>
+                    <button class="nav-btn" data-section="search">Case Search</button>
+                    <button class="nav-btn" data-section="documents">Document Management</button>
+                    <button class="nav-btn" data-section="calendar">Calendar & Scheduling</button>
+                </nav>
+
+                <div id="cases-section" class="dashboard-section">
+                    <h2>Case Management</h2>
+                    <button id="add-case-btn">Add New Case</button>
+                    <div id="cases-list"></div>
+                </div>
+
+                <div id="search-section" class="dashboard-section hidden">
+                    <h2>Case Search</h2>
+                    <div class="search-container">
+                        <form id="case-search-form">
+                            <div class="search-inputs">
+                                <input type="text" id="search-case-number" placeholder="Case Number">
+                                <input type="text" id="search-client-name" placeholder="Client Name">
+                                <select id="search-case-type">
+                                    <option value="">All Case Types</option>
+                                    <option value="Civil">Civil</option>
+                                    <option value="Criminal">Criminal</option>
+                                    <option value="Family">Family</option>
+                                    <option value="Corporate">Corporate</option>
+                                    <option value="Property">Property</option>
+                                </select>
+                                <button type="submit">Search</button>
+                            </div>
+                        </form>
+                        <div id="search-results"></div>
+                    </div>
+                </div>
+
+                <div id="documents-section" class="dashboard-section hidden">
+                    <h2>Document Management</h2>
+                    <div id="document-upload">
+                        <h3>Upload Document</h3>
+                        <form id="document-upload-form">
+                            <select id="case-select" required></select>
+                            <input type="file" id="document-file" required>
+                            <input type="text" id="document-title" placeholder="Document Title" required>
+                            <textarea id="document-description" placeholder="Description"></textarea>
+                            <button type="submit">Upload</button>
+                        </form>
+                    </div>
+                    <div id="documents-list"></div>
+                </div>
+
+                <div id="calendar-section" class="dashboard-section hidden">
+                    <h2>Calendar & Scheduling</h2>
+                    <div class="calendar-controls">
+                        <div class="date-filter">
+                            <label for="date-range">View Hearings:</label>
+                            <select id="date-range">
+                                <option value="upcoming">Upcoming</option>
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+                        </div>
+                        <div class="case-filter">
+                            <input type="text" id="hearing-search" placeholder="Search by case number or client name">
+                        </div>
+                    </div>
+                    <div id="hearings-list" class="hearings-grid"></div>
+                </div>
+            </div>
+
+            <div id="client-dashboard" class="role-dashboard hidden">
+                <div class="case-lookup">
+                    <h2>View Case Details</h2>
+                    <form id="case-lookup-form">
+                        <input type="text" id="case-number" placeholder="Enter Case Number" required>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+                <div id="client-case-details"></div>
+                <div id="client-documents">
+                    <div id="client-document-upload" class="hidden">
+                        <h3>Upload Document</h3>
+                        <form id="client-document-upload-form">
+                            <input type="file" id="client-document-file" required>
+                            <input type="text" id="client-document-title" placeholder="Document Title" required>
+                            <textarea id="client-document-description" placeholder="Description"></textarea>
+                            <button type="submit">Upload Document</button>
+                        </form>
+                    </div>
+                    <div id="client-documents-list"></div>
+                </div>
+                <div id="client-hearings"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/api.js"></script>
+</body>
+</html> 
